@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Create Tweet{% endblock %}
+
+{% block content %}
+<h1>Create Tweet</h1>
+
+<hr class="mt-4">
+
+<div class="mt-4">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="id_content">Content:</label>
+            <textarea name="content" cols="20" rows="3" maxlength="300" id="id_content"></textarea>
+        </div>
+        <div>
+            <label for="id_media">Media:</label>
+            <input type="file" name="media" id="id_media">
+        </div>
+        <button class="btn btn-sm mt-4">Tweet</button>
+    </form>
+</div>
+
+{% endblock %}

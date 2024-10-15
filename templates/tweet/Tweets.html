@@ -1,0 +1,31 @@
+<div class="tweet mt-5">
+    
+    <a href="{% url 'profile' tweet.user.username %}" class="text-gray-300 hover:underline">{{ tweet.user.username }}</a>
+    <p>{{ tweet.content }}</p>
+
+    
+    {% if tweet.media %}
+        <img src="{{ tweet.media.url }}" alt="Tweet media" class="tweet-media mt-2" style="width: 300px; height: 150px; object-fit: cover;">
+    {% endif %}
+
+    <p class="text-gray-300"><small>Posted on: {{ tweet.created_at|date:"Y M d H:i" }}</small></p>
+
+    {% if tweet.user == request.user %}
+    <!-- Show edit and delete options for the tweet owner -->
+    <a href="{% url 'delete_tweet' tweet.pk %}" class="text-gray-300">Delete</a> |
+    <a href="{% url 'edit_tweet' tweet.pk %}" class="text-gray-300">Edit</a> |
+    {% endif %}
+
+
+    {% if request.user in tweet.likes.all %}
+        <a href="{% url 'unlike_tweet' tweet.pk %}" class="text-red-300">UnLike: {{tweet.total_likes}}</a> |
+        {% else %}
+        <a href="{% url 'like_tweet' tweet.pk %}" class="text-gray-300">Like: {{tweet.total_likes}}</a> |
+    {% endif %}
+   
+    <a href="{% url 'detail_tweet' tweet.pk %}" class="text-gray-300">Comment: {{tweet.total_comments}}</a>
+    
+    <hr>
+
+</div>
+

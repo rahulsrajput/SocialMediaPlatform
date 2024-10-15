@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Tweet{% endblock %}
+
+{% block content %}
+<h1>Create Tweet</h1>
+
+<hr class="mt-4">
+
+<div class="mt-4">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="id_content">Content:</label>
+            <textarea name="content" cols="20" rows="3" maxlength="300" id="id_content">{{tweet.content}}</textarea>
+        </div>
+        <div>
+            <label for="id_media">Media:</label>
+            <input type="file" name="media" id="id_media">
+            {% if tweet.media %}
+            <img src="{{ tweet.media.url }}" alt="Tweet media" class="tweet-media mt-2" style="width: 150px; height: 100px; object-fit: cover;">
+            {% endif %}
+        </div>
+        <button class="btn btn-sm mt-4">Update Tweet</button>
+    </form>
+</div>
+
+{% endblock %}

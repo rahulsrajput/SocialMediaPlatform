@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Tweet Details{% endblock %}
+
+{% block content %}
+
+<div class="tweet-detail mt-5">
+    <div>
+        <h2 class="text-gray-300">{{ tweet.user.username }}'s Tweet</h2>
+        <p>{{ tweet.content }}</p>
+        {% if tweet.media %}
+        <img src="{{ tweet.media.url }}" alt="Tweet media" class="tweet-media mt-2" style="width: 300px; height: 150px; object-fit: cover;">
+        {% endif %}
+        <p class="text-gray-300"><small>Posted on: {{ tweet.created_at|date:"Y M d H:i" }}</small></p>
+    </div>
+
+    <hr>
+
+    <div class="mt-4">
+        <h3 class="text-gray-300">Leave a Comment</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="id_content">Comment:</label>
+            <textarea name="content" cols="20" rows="1" maxlength="300" id="id_content"></textarea>
+            <button type="submit" class="btn btn-sm">Comment</button>
+        </form>
+    </div>
+
+
+    <div class="mt-4">
+        <h3 class="text-gray-300">All Comments:-</h3>
+        {% for comment in comments %}
+        <div class="comment p-8">
+            <a href="{% url 'profile' comment.user.username %}" class="text-gray-300">{{ comment.user.username }}</a>
+            <p>{{ comment.content }}</p>
+            <small class="text-gray-300">Posted on: {{ comment.created_at|date:"Y M d H:i" }}</small>
+            
+            <hr>
+        </div>
+        {% empty %}
+        <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

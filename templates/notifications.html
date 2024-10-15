@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+
+<div class="notification-list" id="notification-list">
+    <ul id="notifications"></ul>
+</div>
+
+<a href="{% url 'mark_as_read' %}" class="mt-4 btn btn-sm" id="mark-as-read">Mark As Read</a>
+
+
+<script>
+    function fetchnotification() {
+        const response = fetch("{% url 'notifications_fetch' %}")
+            .then(function (response) {
+                return response.json()
+            })
+            .then(function (data) {
+                console.log(data)
+
+                const notifications = document.getElementById('notifications')
+                notifications.innerHTML = '';
+
+                if (data.notifications.length === 0){
+                    notifications.innerHTML = '<li>No New Notifications</li>'
+                }
+                else{
+                    data.notifications.forEach(notification =>  {
+                        const li = document.createElement('li');
+                        li.textContent = notification.message
+                        notifications.appendChild(li);
+                    });
+                }
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+
+    fetchnotification()
+
+</script>
+
+{% endblock %}

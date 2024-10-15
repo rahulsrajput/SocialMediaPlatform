@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Following{% endblock %}
+
+{% block content %}
+
+{% if followings %}
+{% for following in followings %}
+<a href="">{{following}}</a>
+{% endfor %}
+{% else %}
+<p>No Following</p>
+{% endif %}
+
+{% endblock %}

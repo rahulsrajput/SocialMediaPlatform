@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Twitter{% endblock %}
+
+{% block content %}
+
+
+{% for tweet in tweets %}
+    {% include 'tweet/Tweets.html' %}
+{% empty %}
+    <p>No tweets available.</p>
+{% endfor %}
+
+
+{% endblock %}
