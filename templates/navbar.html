@@ -4,7 +4,7 @@
             {% if request.user.is_authenticated %}
             <li><a href="{% url 'home' %}" class="whitespace-nowrap">Home</a></li>
             <li><a href="{% url 'search_users' %}" class="whitespace-nowrap">Search</a></li>
-            <li><a href="{% url 'profile' request.user %}" class="whitespace-nowrap">{{request.user}}</a></li>
+            <li><a href="{% url 'profile' request.user %}" class="whitespace-nowrap">Profile</a></li>
             <li><a href="{% url 'create_tweet' %}" class="whitespace-nowrap">CreateTweet</a></li>
             <li><a href="{% url 'notifications' %}" class="whitespace-nowrap">Notification <sup id="notification">0</sup></a></li>
             <li><a href="{% url 'logout_user' %}" class="whitespace-nowrap">Logout</a></li>

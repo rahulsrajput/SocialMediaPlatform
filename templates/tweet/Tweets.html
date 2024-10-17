@@ -1,31 +1,30 @@
-<div class="tweet mt-5">
-    
-    <a href="{% url 'profile' tweet.user.username %}" class="text-gray-300 hover:underline">{{ tweet.user.username }}</a>
-    <p>{{ tweet.content }}</p>
 
-    
-    {% if tweet.media %}
-        <img src="{{ tweet.media.url }}" alt="Tweet media" class="tweet-media mt-2" style="width: 300px; height: 150px; object-fit: cover;">
-    {% endif %}
+<div class="card bg-base-100 w-full border border-gray-500">
+    <div class="card-body">
+        <a href="{% url 'profile' tweet.user.username %}" class="text-gray-300 hover:underline">{{ tweet.user.username }}</a>
+        <p>{{ tweet.content }}</p>
 
-    <p class="text-gray-300"><small>Posted on: {{ tweet.created_at|date:"Y M d H:i" }}</small></p>
+        {% if tweet.media %}
+            <img src="{{ tweet.media.url }}" alt="Tweet media" class="tweet-media mt-2" style="width: 300px; height: 150px; object-fit: cover;">
+        {% endif %}
 
-    {% if tweet.user == request.user %}
-    <!-- Show edit and delete options for the tweet owner -->
-    <a href="{% url 'delete_tweet' tweet.pk %}" class="text-gray-300">Delete</a> |
-    <a href="{% url 'edit_tweet' tweet.pk %}" class="text-gray-300">Edit</a> |
-    {% endif %}
+        <p class="text-gray-300"><small>Posted on: {{ tweet.created_at|date:"Y M d H:i" }}</small></p>
+        
 
+        <div class="flex space-x-5 mt-4">
+            {% if request.user in tweet.likes.all %}
+            <a href="{% url 'unlike_tweet' tweet.pk %}"><i class="fa-regular fa-heart fa-lg " style="color: #B197FC;"></i> {{tweet.total_likes}}</a>
+            {% else %}
+            <a href="{% url 'like_tweet' tweet.pk %}"><i class="fa-regular fa-heart fa-lg text-gray-500"></i> {{tweet.total_likes}}</a>
+            {% endif %}
+            <a href="{% url 'detail_tweet' tweet.pk %}"><i class="fa-regular fa-comment fa-lg text-gray-500"></i> {{tweet.total_comments}}</a>
+            
+            {% if tweet.user == request.user %}
+            <a href="{% url 'edit_tweet' tweet.pk %}">Edit</a>
+            <a href="{% url 'delete_tweet' tweet.pk %}"><i class="fa-solid fa-delete-left"></i></a>
+            {% endif %}
 
-    {% if request.user in tweet.likes.all %}
-        <a href="{% url 'unlike_tweet' tweet.pk %}" class="text-red-300">UnLike: {{tweet.total_likes}}</a> |
-        {% else %}
-        <a href="{% url 'like_tweet' tweet.pk %}" class="text-gray-300">Like: {{tweet.total_likes}}</a> |
-    {% endif %}
-   
-    <a href="{% url 'detail_tweet' tweet.pk %}" class="text-gray-300">Comment: {{tweet.total_comments}}</a>
-    
-    <hr>
-
+        </div>
+    </div>
 </div>
 
